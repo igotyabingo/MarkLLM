@@ -25,7 +25,6 @@ from utils.utils import load_config_file
 from utils.transformers_config import TransformersConfig
 from exceptions.exceptions import AlgorithmNameMismatchError
 from transformers import LogitsProcessor, LogitsProcessorList
-from visualize.data_for_visualization import DataForVisualization
 from typing import Union, Optional
 
 
@@ -254,20 +253,3 @@ class KGW(BaseWatermark):
             return {"is_watermarked": is_watermarked, "score": z_score, "flag": green_token_flags}
         else:
             return (is_watermarked, z_score)
-        
-    def get_data_for_visualization(self, text: str, *args, **kwargs) -> tuple[list[str], list[int]]:
-        """Get data for visualization."""
-        
-        # Encode text
-        encoded_text = self.config.generation_tokenizer(text, return_tensors="pt", add_special_tokens=False)["input_ids"][0].to(self.config.device)
-        
-        # Compute z-score and highlight values
-        z_score, highlight_values = self.utils.score_sequence(encoded_text)
-        
-        # decode single tokens
-        decoded_tokens = []
-        for token_id in encoded_text:
-            token = self.config.generation_tokenizer.decode(token_id.item())
-            decoded_tokens.append(token)
-        
-        return DataForVisualization(decoded_tokens, highlight_values)

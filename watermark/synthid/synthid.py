@@ -26,7 +26,6 @@ from .detector import get_detector
 from utils.utils import load_config_file
 from utils.transformers_config import TransformersConfig
 from transformers import LogitsProcessor, LogitsProcessorList
-from visualize.data_for_visualization import DataForVisualization
 from exceptions.exceptions import AlgorithmNameMismatchError, InvalidWatermarkModeError
 
 
@@ -578,18 +577,3 @@ class SynthID(BaseWatermark):
             return {"is_watermarked": bool(is_watermarked), "score": float(score)}
         else:
             return (is_watermarked, float(score))
-        
-    def get_data_for_visualization(self, text: str, *args, **kwargs) -> DataForVisualization:
-        """Get data for visualization."""
-        encoded_text = self.config.generation_tokenizer(text, return_tensors="pt", add_special_tokens=False)["input_ids"][0].to(self.config.device)
-        
-        # Placeholder for visualization data generation
-        decoded_tokens = []
-        highlight_values = []
-        
-        for token_id in encoded_text:
-            token = self.config.generation_tokenizer.decode(token_id.item())
-            decoded_tokens.append(token)
-            highlight_values.append(0)  # Placeholder values
-        
-        return DataForVisualization(decoded_tokens, highlight_values)

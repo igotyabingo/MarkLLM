@@ -100,7 +100,7 @@ def assess_detectability(algorithm_name, dataset_path, model_path, do_sample):
     w_ppl_avg = w_ppl_sum / len(result1)
     u_ppl_avg = u_ppl_sum / len(result1)
     
-    print(f"Average PPL for watermarked text: {w_ppl_avg:.3f}") #, Average PPL for unwatermarked text: {u_ppl_avg:.3f}")
+    print(f"Average PPL for watermarked text: {w_ppl_avg:.3f}, Average PPL for unwatermarked text: {u_ppl_avg:.3f}")
 
 if __name__ == '__main__':
     import argparse

@@ -21,7 +21,6 @@
 from typing import Union
 from utils.utils import load_config_file
 from utils.transformers_config import TransformersConfig
-from visualize.data_for_visualization import DataForVisualization
 from typing import Union
 
 
@@ -90,9 +89,3 @@ class BaseWatermark:
 
     def detect_watermark(self, text:str, return_dict: bool=True, *args, **kwargs) -> Union[tuple, dict]:
         pass
-
-    def get_data_for_visualize(self, text, *args, **kwargs) -> DataForVisualization:
-        pass
-
-
-

@@ -25,7 +25,6 @@ from utils.utils import load_config_file
 from utils.transformers_config import TransformersConfig
 from exceptions.exceptions import AlgorithmNameMismatchError
 from transformers import LogitsProcessor, LogitsProcessorList
-from visualize.data_for_visualization import DataForVisualization
 
 
 class SWEETConfig(BaseConfig):
@@ -233,23 +232,3 @@ class SWEET(BaseWatermark):
             return {"is_watermarked": is_watermarked, "score": z_score}
         else:
             return (is_watermarked, z_score)
-
-    def get_data_for_visualization(self, text: str, *args, **kwargs):
-        """Get data for visualization."""
-        
-        # encode text
-        encoded_text = self.config.generation_tokenizer(text, return_tensors="pt", add_special_tokens=False)["input_ids"][0].to(self.config.generation_model.device)
-
-        # calculate entropy
-        entropy_list = self.utils.calculate_entropy(self.config.generation_model, encoded_text)
-        
-        # compute z-score, highlight_values, and weights
-        z_score, highlight_values, weights = self.utils.score_sequence(encoded_text, entropy_list)
-        
-        # decode single tokens
-        decoded_tokens = []
-        for token_id in encoded_text:
-            token = self.config.generation_tokenizer.decode(token_id.item())
-            decoded_tokens.append(token)
-        
-        return DataForVisualization(decoded_tokens, highlight_values, weights)
