@@ -24,9 +24,8 @@ from dotenv import load_dotenv
 from evaluation.dataset import C4Dataset
 from watermark.auto_watermark import AutoWatermark
 from utils.transformers_config import TransformersConfig
-from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig, Gemma3ForCausalLM
-from evaluation.tools.text_editor import TruncatePromptTextEditor, GemmaParaphraser, SynonymSubstitution
-from evaluation.tools.success_rate_calculator import DynamicThresholdSuccessRateCalculator
+from transformers import AutoTokenizer, Gemma3ForCausalLM
+from evaluation.tools.text_editor import TruncatePromptTextEditor
 from evaluation.pipelines.detection import WatermarkedTextDetectionPipeline, UnWatermarkedTextDetectionPipeline, DetectionPipelineReturnType
 from evaluation.tools.text_quality_analyzer import PPLCalculator
 
